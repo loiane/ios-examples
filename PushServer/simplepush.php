@@ -35,7 +35,12 @@ $body['aps'] = array(
 $payload = json_encode($body);
 
 // Build the binary notification
-$msg = chr(0) . pack('n', 32) . pack('H*', $deviceToken) . pack('n', strlen($payload)) . $payload;
+//Cip - this doesn't work anymore
+//$msg = chr(0) . pack('n', 32) . pack('H*', $deviceToken) . pack('n', strlen($payload)) . $payload;
+$msgInner =  chr(1) . pack('n', 32)  . pack('H*', $deviceToken) .
+	     chr(2) . pack('n', strlen($payload)) . $payload;
+	       //there's 4 bytes for $msgInner's length, might need to modify this if making larger messages
+$msg = chr(2) . chr(0) . chr(0). pack('n', strlen($msgInner)) . $msgInner ;
 
 // Send it to the server
 $result = fwrite($fp, $msg, strlen($msg));
