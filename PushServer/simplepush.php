@@ -15,6 +15,11 @@ $ctx = stream_context_create();
 stream_context_set_option($ctx, 'ssl', 'local_cert', 'ck.pem');
 stream_context_set_option($ctx, 'ssl', 'passphrase', $passphrase);
 
+//Cip - I needed these too when uploading to a PHP server instead of trying this PHP from OSX's terminal
+//stream_context_set_option($ctx, 'ssl', 'verify_peer', 'false');
+//stream_context_set_option($ctx, 'ssl', 'allow_self_signed', 'true');
+//stream_context_set_option($ctx, 'ssl', 'cafile', 'entrust_2048_ca.cer');
+
 // Open a connection to the APNS server
 $fp = stream_socket_client(
 	'ssl://gateway.sandbox.push.apple.com:2195', $err,
